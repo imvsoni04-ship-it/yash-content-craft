@@ -146,5 +146,34 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .text-accent-blue { color: var(--accent-blue); }
+  .bg-accent-blue { background-color: var(--accent-blue); }
+  .ring-accent-blue { --tw-ring-color: var(--accent-blue); }
+  .border-hairline { border-color: var(--hairline); }
+  .bg-hairline { background-color: var(--hairline); }
+  .glass {
+    background-color: color-mix(in oklab, var(--background) 70%, transparent);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+  }
+  .fade-up {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 700ms ease, transform 700ms ease;
+  }
+  .fade-up.in-view {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
