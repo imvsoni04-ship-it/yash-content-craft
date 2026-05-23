@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ElementType, type ReactNode } from "react";
 
-export function FadeIn({ children, className = "", as: As = "div" }: { children: ReactNode; className?: string; as?: keyof JSX.IntrinsicElements }) {
+export function FadeIn({ children, className = "", as: As = "div" }: { children: ReactNode; className?: string; as?: ElementType }) {
   const ref = useRef<HTMLElement | null>(null);
   const [seen, setSeen] = useState(false);
   useEffect(() => {
@@ -12,6 +12,6 @@ export function FadeIn({ children, className = "", as: As = "div" }: { children:
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
-  const Comp = As as any;
-  return <Comp ref={ref as any} className={`fade-up ${seen ? "in-view" : ""} ${className}`}>{children}</Comp>;
+  const Comp: any = As;
+  return <Comp ref={ref} className={`fade-up ${seen ? "in-view" : ""} ${className}`}>{children}</Comp>;
 }
