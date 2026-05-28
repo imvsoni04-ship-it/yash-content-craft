@@ -23,10 +23,14 @@ export function WorkSection({
 
   const source = platform === "instagram" ? instagram : youtube;
   const filtered = useMemo(
-    () => (category === "All" ? source : source.filter((e) => e.category === category)),
+    () =>
+      category === "All"
+        ? source.filter((e) => e.featured)
+        : source.filter((e) => e.category === category),
     [source, category]
   );
-  const visible = expanded ? filtered : filtered.slice(0, 3);
+  const initialCount = category === "All" ? filtered.length : 3;
+  const visible = expanded ? filtered : filtered.slice(0, initialCount);
 
   return (
     <div className="py-16 sm:py-24">
@@ -96,7 +100,7 @@ export function WorkSection({
         ))}
       </div>
 
-      {filtered.length > 3 && (
+      {category !== "All" && filtered.length > 3 && (
         <div className="mt-8 flex justify-center">
           <button
             onClick={() => setExpanded((v) => !v)}
