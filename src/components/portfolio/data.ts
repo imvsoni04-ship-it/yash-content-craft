@@ -142,26 +142,84 @@ export const kkInstagram: Embed[] = kkRaw.map((r, i) => ({
 
 export const kkYoutube: Embed[] = [];
 
-export const wapInstagram: Embed[] = [
-  { id: "wai1", type: "instagram", url: "https://www.instagram.com/reel/C8nT7eIIjMd/", title: "Match Story", category: "Match Stories", featured: true },
-  { id: "wai2", type: "instagram", url: "https://www.instagram.com/reel/C9aB1hYIYrK/", title: "Sports History", category: "History", featured: true },
-  { id: "wai3", type: "instagram", url: "https://www.instagram.com/reel/C7vX2QnIBzL/", title: "Tech in Sports", category: "Tech in Sports", featured: true },
-  { id: "wai4", type: "instagram", url: "https://www.instagram.com/reel/C6pK4LqIqYu/", title: "Match Recap", category: "Match Stories" },
+// What A Playerr — sourced from the WAP categories sheet.
+const wapFeaturedIg = new Set([
+  "https://www.instagram.com/reel/DWgPOGnAZ5J/",
+  "https://www.instagram.com/reel/DSUD7stgf3m/",
+  "https://www.instagram.com/reel/DUK4nj1Aewp/",
+  "https://www.instagram.com/reel/DPVnzfDD4xf/",
+  "https://www.instagram.com/reel/DQmaaARgccH/",
+  "https://www.instagram.com/reel/DTPfe1Dgbnk/",
+]);
+
+const wapIgRaw: { url: string; title: string; category: string }[] = [
+  // Cricket Stories
+  { url: "https://www.instagram.com/reel/DSUD7stgf3m/", title: "How Mallya's mistake costed RCB", category: "Cricket Stories" },
+  { url: "https://www.instagram.com/reel/DWgPOGnAZ5J/", title: "How Rohit became Mumbai Cha Raja?", category: "Cricket Stories" },
+  { url: "https://www.instagram.com/reel/DTcWA3bAR4E/", title: "How was Ashes series started?", category: "Cricket Stories" },
+  { url: "https://www.instagram.com/reel/DSZWhZQAZs1/", title: "England Cricket team out of Olympics", category: "Cricket Stories" },
+  { url: "https://www.instagram.com/reel/DSHzlJJgRrw/", title: "How Nehru saved Bihar with Cricket?", category: "Cricket Stories" },
+  { url: "https://www.instagram.com/reel/DR6moHsAQ4D/", title: "How BCCI earns money?", category: "Cricket Stories" },
+  { url: "https://www.instagram.com/reel/DQmaaARgccH/", title: "Women who won us 1st world cup", category: "Cricket Stories" },
+  { url: "https://www.instagram.com/reel/DPLloTNAd8I/", title: "Cricket world cup without final", category: "Cricket Stories" },
+  { url: "https://www.instagram.com/reel/DUSom2xgeQq/", title: "Spain gave us IPL tune", category: "Cricket Stories" },
+  // Tech in Sports
+  { url: "https://www.instagram.com/reel/DUK4nj1Aewp/", title: "What's Hotspot in Cricket", category: "Tech in Sports" },
+  { url: "https://www.instagram.com/reel/DTPfe1Dgbnk/", title: "Difference between Snicko and UltraEdge", category: "Tech in Sports" },
+  // Others
+  { url: "https://www.instagram.com/reel/DPVnzfDD4xf/", title: "How are shuttlecocks made?", category: "Others" },
+  { url: "https://www.instagram.com/reel/DT41_y5gVj4/", title: "What if I won an Olympic Gold?", category: "Others" },
+  { url: "https://www.instagram.com/reel/DSmJb5RgTbx/", title: "How India won the Squash World Cup?", category: "Others" },
+  { url: "https://www.instagram.com/reel/DSegJ8KAZZQ/", title: "Man who laid the foundation of Indian football", category: "Others" },
+  { url: "https://www.instagram.com/reel/DP0uRR5gVoy/", title: "A hockey player who made Jharkhand", category: "Others" },
+  { url: "https://www.instagram.com/reel/DPi0lZrAUFh/", title: "Indian Para Athletes created history", category: "Others" },
+  { url: "https://www.instagram.com/reel/DPQXH6MgVGB/", title: "World's largest team sport from Kerala", category: "Others" },
 ];
 
-export const wapYoutube: Embed[] = [];
+export const wapInstagram: Embed[] = wapIgRaw.map((r, i) => ({
+  id: `wai${i + 1}`,
+  type: "instagram",
+  url: r.url,
+  title: r.title,
+  category: r.category,
+  featured: wapFeaturedIg.has(r.url),
+}));
+
+const wapYtFeatured = new Set(["9XWvwZsCsms", "484Ueh4f3uE", "vZSVRtImyHk", "JYvNaLWLXbo"]);
+const wapYtRaw: { id: string; title: string; category: string }[] = [
+  { id: "9XWvwZsCsms", title: "What's Hotspot in Cricket", category: "Tech in Sports" },
+  { id: "484Ueh4f3uE", title: "Mumbai cha Raja Rohit Sharma", category: "Cricket Stories" },
+  { id: "vZSVRtImyHk", title: "Snicko v/s UltraEdge", category: "Tech in Sports" },
+  { id: "5t9_-WSAon8", title: "England are out of Olympics", category: "Cricket Stories" },
+  { id: "WqCfos-rI7I", title: "Mallya's mistake costed RCB", category: "Cricket Stories" },
+  { id: "1HO43fE9PXg", title: "How Shuttles are made?", category: "Others" },
+  { id: "YPfwk8Hk8o8", title: "Biryani won the test match", category: "Cricket Stories" },
+  { id: "1YRJipJ78lI", title: "India won squash world cup 1st time", category: "Others" },
+  { id: "JYvNaLWLXbo", title: "Indian women lift the world cup", category: "Cricket Stories" },
+  { id: "MCry-DiOIK0", title: "Who gave the oldest football tournament", category: "Others" },
+  { id: "IztuONepazI", title: "How was Badminton invented", category: "Others" },
+];
+
+export const wapYoutube: Embed[] = wapYtRaw.map((r, i) => ({
+  id: `way${i + 1}`,
+  type: "youtube",
+  url: r.id,
+  title: r.title,
+  category: r.category,
+  featured: wapYtFeatured.has(r.id),
+}));
 
 export const kkCategories = [
   "All", "State Stories", "Science", "Historical", "Human Geography",
   "Geography", "Manufacturing", "Geopolitics", "Myth Busting", "Problems",
 ] as const;
-export const wapCategories = ["All", "History", "Match Stories", "Tech in Sports"] as const;
+export const wapCategories = ["All", "Cricket Stories", "Tech in Sports", "Others"] as const;
 
 export const skills = {
   Production: ["Short-form scripting", "Topic ideation", "Research", "Fact-checking", "Quality control"],
   Strategy: ["Audience growth", "Performance tracking", "Trend spotting", "SOP building", "Content planning"],
   Leadership: ["Team coordination", "Editor management", "Community management", "On-ground direction"],
-  Tools: ["Basic editing", "Graphic design", "Instagram", "YouTube"],
+  Tools: ["Basic editing", "Graphic design", "A.I Integration"],
 };
 
 export const testimonials = [

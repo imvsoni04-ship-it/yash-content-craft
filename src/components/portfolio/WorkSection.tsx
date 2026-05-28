@@ -29,7 +29,7 @@ export function WorkSection({
         : source.filter((e) => e.category === category),
     [source, category]
   );
-  const initialCount = category === "All" ? filtered.length : 3;
+  const initialCount = category === "All" ? 6 : 3;
   const visible = expanded ? filtered : filtered.slice(0, initialCount);
 
   return (
@@ -100,7 +100,7 @@ export function WorkSection({
         ))}
       </div>
 
-      {category !== "All" && filtered.length > 3 && (
+      {filtered.length > initialCount && (
         <div className="mt-8 flex justify-center">
           <button
             onClick={() => setExpanded((v) => !v)}

@@ -1,7 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Mail, Linkedin, Download, Calendar, ArrowDown, FileText, ClipboardList, BarChart3 } from "lucide-react";
-import heroPhoto from "@/assets/yash-hero.png";
-import aboutPhoto from "@/assets/yash-about.png";
+import { Mail, Linkedin, Download, Calendar, ArrowDown, FileText, ClipboardList, BarChart3, Instagram, Youtube, Camera, Pencil, Eye, Sparkles } from "lucide-react";
 import kkLogo from "@/assets/kk-create.png";
 import wapLogo from "@/assets/what-a-playerr.png";
 import { WorkSection } from "@/components/portfolio/WorkSection";
@@ -12,13 +10,19 @@ import {
   skills, testimonials, milestones,
 } from "@/components/portfolio/data";
 
+const RESUME_URL = "https://drive.google.com/file/d/1YBPJxL8aiA1BjAFzCkaomI34XfvPFHg6/view";
+const EMAIL = "yashsoni98136@gmail.com";
+const MAILTO = `mailto:${EMAIL}`;
+const LINKEDIN_URL = "https://www.linkedin.com/in/yashsonig";
+const CALENDLY_URL = MAILTO;
+
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Yash — Short-Form Content Producer" },
+      { title: "Yash Soni — Short-Form Content Producer" },
       { name: "description", content: "Short-form content producer with 3 years of building audiences, breaking down complex topics, and leading end-to-end production." },
-      { property: "og:title", content: "Yash — Short-Form Content Producer" },
+      { property: "og:title", content: "Yash Soni — Short-Form Content Producer" },
       { property: "og:description", content: "1.6M+ followers grown. 1.5M+ avg. views per reel. 750K+ YouTube subscribers built." },
       { property: "og:type", content: "website" },
     ],
@@ -37,20 +41,20 @@ function Header() {
   return (
     <header className="fixed top-0 inset-x-0 z-50 glass border-b border-hairline">
       <div className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
-        <a href="#top" className="text-lg font-bold tracking-tight">Yash</a>
+        <a href="#top" className="text-lg font-bold tracking-tight">Yash Soni</a>
         <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
           {navLinks.map((l) => (
             <a key={l.href} href={l.href} className="hover:text-foreground transition-colors">{l.label}</a>
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <a href="#" aria-label="Email" className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors">
+          <a href={MAILTO} aria-label="Email" className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors">
             <Mail size={18} />
           </a>
-          <a href="#" aria-label="LinkedIn" target="_blank" rel="noreferrer" className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors">
+          <a href={LINKEDIN_URL} aria-label="LinkedIn" target="_blank" rel="noreferrer" className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors">
             <Linkedin size={18} />
           </a>
-          <a href="#" className="ml-2 hidden sm:inline-flex items-center gap-2 text-xs font-medium bg-accent-blue text-white px-4 py-2 rounded-full hover:opacity-90 transition-opacity">
+          <a href={RESUME_URL} target="_blank" rel="noreferrer" className="ml-2 hidden sm:inline-flex items-center gap-2 text-xs font-medium bg-accent-blue text-white px-4 py-2 rounded-full hover:opacity-90 transition-opacity">
             <Download size={14} /> Resume
           </a>
         </div>
@@ -59,49 +63,90 @@ function Header() {
   );
 }
 
+function FloatingComposition() {
+  const Tile = ({ className, gradient, children }: { className: string; gradient: string; children: React.ReactNode }) => (
+    <div className={`absolute rounded-2xl shadow-2xl flex items-center justify-center text-white/95 ${className}`}
+      style={{ background: gradient }}>
+      {children}
+    </div>
+  );
+  return (
+    <div className="relative h-[420px] sm:h-[480px] w-full">
+      <div className="absolute inset-0 -z-10 rounded-full blur-3xl opacity-60"
+        style={{ background: "radial-gradient(circle at 60% 50%, rgba(0,113,227,0.35), transparent 60%)" }} />
+      <Tile className="top-2 left-[18%] h-20 w-20 sm:h-24 sm:w-24 rotate-[-8deg]"
+        gradient="linear-gradient(135deg,#7a1f3d,#3d0f1f)">
+        <Instagram size={32} />
+      </Tile>
+      <Tile className="top-[30%] right-[8%] h-20 w-20 sm:h-24 sm:w-24 rotate-[8deg]"
+        gradient="linear-gradient(135deg,#7a1f1f,#3d0f0f)">
+        <Youtube size={32} />
+      </Tile>
+      <Tile className="top-[52%] left-[8%] h-20 w-20 sm:h-24 sm:w-24 rotate-[-6deg]"
+        gradient="linear-gradient(135deg,#1f4a7a,#0f243d)">
+        <Camera size={30} />
+      </Tile>
+      <Tile className="bottom-2 right-[20%] h-20 w-20 sm:h-24 sm:w-24 rotate-[6deg]"
+        gradient="linear-gradient(135deg,#1f5a3a,#0f2d1d)">
+        <Pencil size={28} />
+      </Tile>
+      <div className="absolute top-[42%] left-1/2 -translate-x-1/2 rounded-2xl border border-hairline bg-black/70 backdrop-blur px-4 py-3 flex items-center gap-3 shadow-xl">
+        <Eye size={18} className="text-accent-blue" />
+        <div>
+          <div className="text-lg font-semibold leading-none">1.04M</div>
+          <div className="text-[10px] uppercase tracking-wider text-muted-foreground mt-1">Views · 24h</div>
+        </div>
+      </div>
+      <div className="absolute top-[68%] right-[6%] inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border border-accent-blue/40 bg-background/60 text-accent-blue">
+        <Sparkles size={12} /> Trending Now
+      </div>
+    </div>
+  );
+}
+
 function Hero() {
   return (
-    <section id="top" className="pt-32 pb-20 sm:pt-40 sm:pb-28">
-      <div className="mx-auto max-w-4xl px-6 text-center">
-        <div className="flex justify-center">
-          <div className="p-[6px] rounded-full ring-2 ring-accent-blue">
-            <img src={heroPhoto} alt="Yash" className="h-[120px] w-[120px] rounded-full object-cover" />
-          </div>
-        </div>
-        <h1 className="mt-8 text-5xl sm:text-7xl font-bold tracking-tight">Yash</h1>
-        <p className="mt-6 text-2xl sm:text-4xl font-semibold tracking-tight text-foreground/90">
-          Short-Form Content Producer
-        </p>
-        <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-          3 years of building audiences, breaking down complex topics, and leading end-to-end production.
-        </p>
-
-        <div className="mt-12 grid grid-cols-3 gap-6 max-w-3xl mx-auto">
-          {[
-            { num: "1.6M+", label: "Followers Grown" },
-            { num: "1.5M+", label: "Avg. Views Per Reel" },
-            { num: "750K+", label: "YouTube Subscribers Built" },
-          ].map((s) => (
-            <div key={s.label}>
-              <div className="text-2xl sm:text-4xl font-semibold tracking-tight">{s.num}</div>
-              <div className="mt-2 text-xs sm:text-sm text-muted-foreground">{s.label}</div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-8 flex justify-center">
-          <span className="inline-flex items-center text-xs px-4 py-1.5 rounded-full bg-accent-blue/10 text-accent-blue border border-accent-blue/30">
+    <section id="top" className="pt-28 pb-20 sm:pt-36 sm:pb-28">
+      <div className="mx-auto max-w-6xl px-6 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div>
+          <span className="inline-flex items-center gap-2 text-xs px-4 py-1.5 rounded-full border border-hairline text-foreground/80">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent-blue" />
             Open to: Freelance · Full-Time · Collaborations
           </span>
+          <h1 className="mt-8 text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
+            Short-Form
+            <br />
+            Content <span className="text-accent-blue">Producer.</span>
+          </h1>
+          <p className="mt-6 text-base sm:text-lg text-muted-foreground max-w-xl leading-relaxed">
+            3 years of building audiences, breaking down complex topics, and leading end-to-end production.
+          </p>
+
+          <div className="mt-10 grid grid-cols-3 gap-4 max-w-xl">
+            {[
+              { num: "1.6M+", label: "Followers Grown" },
+              { num: "1.5M+", label: "Avg. Views Per Reel" },
+              { num: "750K+", label: "YouTube Subscribers Built" },
+            ].map((s) => (
+              <div key={s.label}>
+                <div className="text-2xl sm:text-3xl font-semibold tracking-tight">{s.num}</div>
+                <div className="mt-2 text-xs text-muted-foreground">{s.label}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 flex flex-wrap gap-3">
+            <a href="#work" className="inline-flex items-center gap-2 bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:opacity-90 transition-opacity">
+              See My Work <ArrowDown size={16} />
+            </a>
+            <a href={CALENDLY_URL} className="inline-flex items-center gap-2 border border-hairline px-6 py-3 rounded-full text-sm font-medium text-foreground hover:bg-white/5 transition-colors">
+              <Calendar size={16} /> Schedule a 10-min Call
+            </a>
+          </div>
         </div>
 
-        <div className="mt-10 flex flex-wrap justify-center gap-3">
-          <a href="#work" className="inline-flex items-center gap-2 bg-accent-blue text-white px-6 py-3 rounded-full text-sm font-medium hover:opacity-90 transition-opacity">
-            See My Work <ArrowDown size={16} />
-          </a>
-          <a href="#" className="inline-flex items-center gap-2 border border-hairline px-6 py-3 rounded-full text-sm font-medium text-foreground hover:bg-white/5 transition-colors">
-            <Calendar size={16} /> Book a 10-min Call
-          </a>
+        <div className="hidden lg:block">
+          <FloatingComposition />
         </div>
       </div>
     </section>
@@ -111,25 +156,14 @@ function Hero() {
 function About() {
   return (
     <section id="about" className="py-20 sm:py-28">
-      <div className="mx-auto max-w-5xl px-6">
+      <div className="mx-auto max-w-4xl px-6">
         <div className="h-px bg-hairline" />
         <FadeIn className="py-16 sm:py-24">
-          <div className="grid md:grid-cols-5 gap-10 md:gap-14 items-center">
-            <div className="md:col-span-2">
-              <img
-                src={aboutPhoto}
-                alt="Yash"
-                className="w-full md:w-[280px] md:h-[320px] object-cover rounded-2xl"
-              />
-            </div>
-            <div className="md:col-span-3">
-              <p className="text-[11px] uppercase tracking-[0.2em] text-accent-blue">About Me</p>
-              <p className="mt-6 text-[22px] sm:text-[24px] font-light leading-[1.8] text-foreground/90">
-                I&apos;m Yash, a short-form content producer with 3 years of experience. I started as a Researcher and Writer and grew into leading full Instagram pages end-to-end — from ideation and scripting to editor coordination and performance tracking. I specialise in breaking down complex topics — historical, geopolitical, geographical, myth-busting — into simple, engaging scripts that move fast and hit hard.{" "}
-                <em className="not-italic text-accent-blue text-[24px] sm:text-[26px]">Trends are basically my thing.</em>
-              </p>
-            </div>
-          </div>
+          <p className="text-[11px] uppercase tracking-[0.2em] text-accent-blue">About Me</p>
+          <p className="mt-6 text-[22px] sm:text-[26px] font-light leading-[1.7] text-foreground/90">
+            I&apos;m Yash Soni, a short-form content producer with 3 years of experience. I started as a Researcher and Writer and grew into leading full Instagram pages end-to-end — from ideation and scripting to editor coordination and performance tracking. I specialise in breaking down complex topics — historical, geopolitical, geographical, myth-busting — into simple, engaging scripts that move fast and hit hard.{" "}
+            <em className="not-italic text-accent-blue">Trends are basically my thing.</em>
+          </p>
         </FadeIn>
         <div className="h-px bg-hairline" />
       </div>
@@ -247,13 +281,13 @@ function Contact() {
           Open to collaborations, freelance projects, and full-time opportunities.
         </p>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
-          <a href="#" className="inline-flex items-center gap-2 bg-accent-blue text-white px-6 py-3 rounded-full text-sm font-medium hover:opacity-90 transition-opacity">
+          <a href={MAILTO} className="inline-flex items-center gap-2 bg-accent-blue text-white px-6 py-3 rounded-full text-sm font-medium hover:opacity-90 transition-opacity">
             <Mail size={16} /> Email Me
           </a>
-          <a href="#" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 border border-hairline px-6 py-3 rounded-full text-sm font-medium hover:bg-white/5 transition-colors">
+          <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 border border-hairline px-6 py-3 rounded-full text-sm font-medium hover:bg-white/5 transition-colors">
             <Linkedin size={16} /> LinkedIn
           </a>
-          <a href="#" className="inline-flex items-center gap-2 border border-hairline px-6 py-3 rounded-full text-sm font-medium hover:bg-white/5 transition-colors">
+          <a href={MAILTO} className="inline-flex items-center gap-2 border border-hairline px-6 py-3 rounded-full text-sm font-medium hover:bg-white/5 transition-colors">
             <Calendar size={16} /> Book a Call
           </a>
         </div>
@@ -266,10 +300,10 @@ function Footer() {
   return (
     <footer className="border-t border-hairline">
       <div className="mx-auto max-w-6xl px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="text-xs text-muted-foreground">© 2025 Yash. All rights reserved.</p>
+        <p className="text-xs text-muted-foreground">© 2025 Yash Soni. All rights reserved.</p>
         <div className="flex items-center gap-2">
-          <a href="#" aria-label="Email" className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors"><Mail size={16} /></a>
-          <a href="#" aria-label="LinkedIn" className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors"><Linkedin size={16} /></a>
+          <a href={MAILTO} aria-label="Email" className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors"><Mail size={16} /></a>
+          <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors"><Linkedin size={16} /></a>
         </div>
       </div>
     </footer>
