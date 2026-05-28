@@ -82,13 +82,11 @@ export function ReelCard({ embed }: { embed: Embed }) {
           <div className="absolute inset-0 animate-pulse bg-white/[0.04]" />
         )}
       </div>
-      <div className="p-4 flex items-center justify-between gap-3">
-        <div className="flex items-center gap-3 text-xs text-muted-foreground">
-          <span className="flex items-center gap-1"><span aria-hidden>👁</span> {embed.views}</span>
-          <span className="flex items-center gap-1"><span aria-hidden>❤</span> {embed.likes}</span>
-          <span className="flex items-center gap-1"><span aria-hidden>💬</span> {embed.comments}</span>
-        </div>
-        <span className="text-[10px] uppercase tracking-wider text-accent-blue border border-accent-blue/40 rounded-full px-2 py-1">
+      <div className="p-4 flex items-start justify-between gap-3">
+        <p className="text-sm text-foreground/90 leading-snug line-clamp-2 flex-1">
+          {embed.title}
+        </p>
+        <span className="shrink-0 text-[10px] uppercase tracking-wider text-accent-blue border border-accent-blue/40 rounded-full px-2 py-1">
           {embed.category}
         </span>
       </div>
