@@ -238,6 +238,7 @@ export const testimonials = [
   {
     initials: "S",
     image: sushovitaImg,
+    name: "Sushovita Das",
     quote:
       "Yash showed me how to write scripts which hit millions of views. No question was too silly for him—he had my back!",
     linkedin:
