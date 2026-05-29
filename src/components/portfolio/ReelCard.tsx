@@ -57,7 +57,8 @@ export function ReelCard({ embed }: { embed: Embed }) {
   return (
     <div
       ref={ref}
-      className="group rounded-2xl border border-hairline bg-white/[0.02] overflow-hidden flex flex-col"
+      className="group rounded-2xl border overflow-hidden flex flex-col"
+      style={{ backgroundColor: "#0a0a0a", borderColor: "#222222" }}
     >
       <div className="relative w-full bg-black aspect-[9/16] overflow-hidden">
         {inView ? (
@@ -83,7 +84,7 @@ export function ReelCard({ embed }: { embed: Embed }) {
         )}
       </div>
       <div className="p-4 flex items-start justify-between gap-3">
-        <p className="text-sm text-foreground/90 leading-snug line-clamp-2 flex-1">
+        <p className="text-sm leading-snug line-clamp-2 flex-1" style={{ color: "#ffffff" }}>
           {embed.title}
         </p>
         <span className="shrink-0 text-[10px] uppercase tracking-wider text-accent-blue border border-accent-blue/40 rounded-full px-2 py-1">
