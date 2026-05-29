@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Mail, Linkedin, Download, Calendar, ArrowDown, FileText, ClipboardList, BarChart3, Instagram, Youtube, Camera, Pencil, Eye, Sparkles } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Mail, Linkedin, Download, Calendar, ArrowDown, FileText, ClipboardList, Instagram, Youtube, Camera, Pencil, Menu, X } from "lucide-react";
 import kkLogo from "@/assets/kk-create.png";
 import wapLogo from "@/assets/what-a-playerr.png";
 import { WorkSection } from "@/components/portfolio/WorkSection";
@@ -38,6 +39,7 @@ const navLinks = [
 ];
 
 function Header() {
+  const [open, setOpen] = useState(false);
   return (
     <header className="fixed top-0 inset-x-0 z-50 glass border-b border-hairline">
       <div className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
@@ -48,58 +50,104 @@ function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <a href={MAILTO} aria-label="Email" className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors">
+          <a href={MAILTO} aria-label="Email" className="hidden sm:inline-flex p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors">
             <Mail size={18} />
           </a>
-          <a href={LINKEDIN_URL} aria-label="LinkedIn" target="_blank" rel="noreferrer" className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors">
+          <a href={LINKEDIN_URL} aria-label="LinkedIn" target="_blank" rel="noreferrer" className="hidden sm:inline-flex p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors">
             <Linkedin size={18} />
           </a>
           <a href={RESUME_URL} target="_blank" rel="noreferrer" className="ml-2 hidden sm:inline-flex items-center gap-2 text-xs font-medium bg-accent-blue text-white px-4 py-2 rounded-full hover:opacity-90 transition-opacity">
             <Download size={14} /> Resume
           </a>
+          <button
+            type="button"
+            aria-label="Toggle menu"
+            onClick={() => setOpen((v) => !v)}
+            className="md:hidden inline-flex items-center justify-center h-11 w-11 rounded-full text-foreground hover:bg-white/5 transition-colors"
+          >
+            {open ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
       </div>
+      {open && (
+        <div className="md:hidden border-t border-hairline bg-background/95 backdrop-blur">
+          <nav className="mx-auto max-w-6xl px-6 py-4 flex flex-col gap-1">
+            {navLinks.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={() => setOpen(false)}
+                className="py-3 text-base text-foreground/90 hover:text-accent-blue transition-colors"
+              >
+                {l.label}
+              </a>
+            ))}
+            <div className="mt-2 flex items-center gap-3">
+              <a href={MAILTO} aria-label="Email" className="inline-flex items-center justify-center h-11 w-11 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/5"><Mail size={18} /></a>
+              <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="inline-flex items-center justify-center h-11 w-11 rounded-full text-muted-foreground hover:text-foreground hover:bg-white/5"><Linkedin size={18} /></a>
+              <a href={RESUME_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-xs font-medium bg-accent-blue text-white px-4 py-2 rounded-full hover:opacity-90">
+                <Download size={14} /> Resume
+              </a>
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
 
 function FloatingComposition() {
-  const Tile = ({ className, gradient, children }: { className: string; gradient: string; children: React.ReactNode }) => (
-    <div className={`absolute rounded-2xl shadow-2xl flex items-center justify-center text-white/95 ${className}`}
-      style={{ background: gradient }}>
+function FloatingComposition() {
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const handler = (e: MouseEvent) => {
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - (r.left + r.width / 2)) / r.width;
+      const y = (e.clientY - (r.top + r.height / 2)) / r.height;
+      setMouse({ x, y });
+    };
+    const leave = () => setMouse({ x: 0, y: 0 });
+    el.addEventListener("mousemove", handler);
+    el.addEventListener("mouseleave", leave);
+    return () => {
+      el.removeEventListener("mousemove", handler);
+      el.removeEventListener("mouseleave", leave);
+    };
+  }, []);
+  const Tile = ({
+    className, gradient, tilt, depth, delay, children,
+  }: { className: string; gradient: string; tilt: number; depth: number; delay: string; children: React.ReactNode }) => (
+    <div
+      className={`absolute rounded-2xl shadow-2xl flex items-center justify-center text-white/95 float-tile cursor-pointer ${className}`}
+      style={{
+        background: gradient,
+        ["--tilt" as any]: `${tilt}deg`,
+        animationDelay: delay,
+        transform: `translate3d(${mouse.x * depth}px, ${mouse.y * depth}px, 0) rotate(${tilt}deg)`,
+      }}
+    >
       {children}
     </div>
   );
   return (
-    <div className="relative h-[420px] sm:h-[480px] w-full">
+    <div ref={wrapRef} className="relative h-[360px] sm:h-[480px] w-full" style={{ perspective: "1000px" }}>
       <div className="absolute inset-0 -z-10 rounded-full blur-3xl opacity-60"
         style={{ background: "radial-gradient(circle at 60% 50%, rgba(0,113,227,0.35), transparent 60%)" }} />
-      <Tile className="top-2 left-[18%] h-20 w-20 sm:h-24 sm:w-24 rotate-[-8deg]"
-        gradient="linear-gradient(135deg,#7a1f3d,#3d0f1f)">
+      <Tile className="top-2 left-[18%] h-20 w-20 sm:h-24 sm:w-24" gradient="linear-gradient(135deg,#7a1f3d,#3d0f1f)" tilt={-8} depth={28} delay="0s">
         <Instagram size={32} />
       </Tile>
-      <Tile className="top-[30%] right-[8%] h-20 w-20 sm:h-24 sm:w-24 rotate-[8deg]"
-        gradient="linear-gradient(135deg,#7a1f1f,#3d0f0f)">
+      <Tile className="top-[30%] right-[8%] h-20 w-20 sm:h-24 sm:w-24" gradient="linear-gradient(135deg,#7a1f1f,#3d0f0f)" tilt={8} depth={-22} delay="0.4s">
         <Youtube size={32} />
       </Tile>
-      <Tile className="top-[52%] left-[8%] h-20 w-20 sm:h-24 sm:w-24 rotate-[-6deg]"
-        gradient="linear-gradient(135deg,#1f4a7a,#0f243d)">
+      <Tile className="top-[52%] left-[8%] h-20 w-20 sm:h-24 sm:w-24" gradient="linear-gradient(135deg,#1f4a7a,#0f243d)" tilt={-6} depth={18} delay="0.8s">
         <Camera size={30} />
       </Tile>
-      <Tile className="bottom-2 right-[20%] h-20 w-20 sm:h-24 sm:w-24 rotate-[6deg]"
-        gradient="linear-gradient(135deg,#1f5a3a,#0f2d1d)">
+      <Tile className="bottom-2 right-[20%] h-20 w-20 sm:h-24 sm:w-24" gradient="linear-gradient(135deg,#1f5a3a,#0f2d1d)" tilt={6} depth={-30} delay="1.2s">
         <Pencil size={28} />
       </Tile>
-      <div className="absolute top-[42%] left-1/2 -translate-x-1/2 rounded-2xl border border-hairline bg-black/70 backdrop-blur px-4 py-3 flex items-center gap-3 shadow-xl">
-        <Eye size={18} className="text-accent-blue" />
-        <div>
-          <div className="text-lg font-semibold leading-none">1.04M</div>
-          <div className="text-[10px] uppercase tracking-wider text-muted-foreground mt-1">Views · 24h</div>
-        </div>
-      </div>
-      <div className="absolute top-[68%] right-[6%] inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border border-accent-blue/40 bg-background/60 text-accent-blue">
-        <Sparkles size={12} /> Trending Now
-      </div>
     </div>
   );
 }
@@ -113,10 +161,10 @@ function Hero() {
             <span className="h-1.5 w-1.5 rounded-full bg-accent-blue" />
             Open to: Freelance · Full-Time · Collaborations
           </span>
-          <h1 className="mt-8 text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
+          <h1 className="mt-8 text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
             Short-Form
             <br />
-            Content <span className="text-accent-blue">Producer.</span>
+            Creative <span className="text-accent-blue">Producer.</span>
           </h1>
           <p className="mt-6 text-base sm:text-lg text-muted-foreground max-w-xl leading-relaxed">
             3 years of building audiences, breaking down complex topics, and leading end-to-end production.
@@ -145,7 +193,7 @@ function Hero() {
           </div>
         </div>
 
-        <div className="hidden lg:block">
+        <div className="mt-4 lg:mt-0">
           <FloatingComposition />
         </div>
       </div>
@@ -159,10 +207,11 @@ function About() {
       <div className="mx-auto max-w-4xl px-6">
         <div className="h-px bg-hairline" />
         <FadeIn className="py-16 sm:py-24">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-accent-blue">About Me</p>
-          <p className="mt-6 text-[22px] sm:text-[26px] font-light leading-[1.7] text-foreground/90">
-            I&apos;m Yash Soni, a short-form content producer with 3 years of experience. I started as a Researcher and Writer and grew into leading full Instagram pages end-to-end — from ideation and scripting to editor coordination and performance tracking. I specialise in breaking down complex topics — historical, geopolitical, geographical, myth-busting — into simple, engaging scripts that move fast and hit hard.{" "}
-            <em className="not-italic text-accent-blue">Trends are basically my thing.</em>
+          <p className="text-[11px] uppercase tracking-[0.2em] text-accent-blue">Who I Am</p>
+          <p className="mt-6 text-[20px] sm:text-[26px] font-light leading-[1.7] text-foreground/90">
+            I&apos;m Iron Man.<br />
+            Haha, not really :)<br />
+            But hear me out. Tony Stark built a suit, &amp; everyone noticed the suit. Yet behind every suit, there&apos;s a Stark. Similarly, I&apos;m the one who made you stop scrolling. Through research, storytelling, scripts and content strategies that reach <span className="text-accent-blue">millions</span>.
           </p>
         </FadeIn>
         <div className="h-px bg-hairline" />
@@ -199,24 +248,39 @@ function Timeline() {
 
 function WorkSamples() {
   const samples = [
-    { icon: FileText, title: "Sample Script", desc: "A short-form script breaking down a complex topic." },
-    { icon: ClipboardList, title: "SOP Document", desc: "Operating playbook for running a content page." },
-    { icon: BarChart3, title: "Performance Report", desc: "Weekly reel performance analysis & insights." },
+    {
+      icon: FileText,
+      title: "Sample Script",
+      desc: "A short-form script breaking down a complex topic.",
+      href: "https://www.notion.so/Yash-s-Portfolio-1bfc2ca2cb924936b1393f2732218f3e?source=copy_link",
+    },
+    {
+      icon: ClipboardList,
+      title: "SOP Document",
+      desc: "Operating playbook for running a content page.",
+      href: "https://canva.link/5qb8v0x48dfkl2x",
+    },
   ];
   return (
     <section className="py-16">
       <div className="mx-auto max-w-6xl px-6">
         <h3 className="text-2xl font-semibold tracking-tight">Work Samples</h3>
-        <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="mt-8 grid sm:grid-cols-2 gap-5">
           {samples.map((s) => (
-            <div key={s.title} className="rounded-2xl border border-hairline p-6 bg-white/[0.02]">
+            <a
+              key={s.title}
+              href={s.href}
+              target="_blank"
+              rel="noreferrer"
+              className="block rounded-2xl border border-hairline p-6 bg-white/[0.02] hover:border-accent-blue/50 transition-colors"
+            >
               <s.icon className="text-accent-blue" size={22} />
               <div className="mt-4 text-lg font-medium">{s.title}</div>
               <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
-              <a href="#" className="mt-5 inline-flex items-center gap-2 text-sm text-accent-blue hover:opacity-80">
+              <span className="mt-5 inline-flex items-center gap-2 text-sm text-accent-blue hover:opacity-80">
                 View / Download →
-              </a>
-            </div>
+              </span>
+            </a>
           ))}
         </div>
       </div>
@@ -257,12 +321,25 @@ function Testimonials() {
         <h2 className="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight">What People Say</h2>
         <div className="mt-12 grid md:grid-cols-2 gap-6">
           {testimonials.map((t, i) => (
-            <div key={i} className="rounded-2xl border border-hairline p-8 bg-white/[0.02]">
-              <p className="text-lg leading-relaxed text-foreground/90">“{t.quote}”</p>
-              <div className="mt-6">
-                <div className="text-sm font-medium">{t.name}</div>
-                <div className="text-xs text-muted-foreground">{t.role}</div>
+            <div key={i} className="rounded-2xl border border-hairline p-6 sm:p-8 bg-white/[0.02] flex flex-col">
+              <div className="flex items-center gap-4">
+                <div className="h-12 w-12 rounded-full bg-gradient-to-br from-accent-blue to-accent-blue/40 flex items-center justify-center text-sm font-semibold text-white">
+                  {t.initials}
+                </div>
+                <div className="flex-1">
+                  <div className="text-sm font-medium">{t.name}</div>
+                </div>
+                <a
+                  href={t.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`${t.name} on LinkedIn`}
+                  className="p-2 rounded-full text-muted-foreground hover:text-accent-blue hover:bg-white/5 transition-colors"
+                >
+                  <Linkedin size={18} />
+                </a>
               </div>
+              <p className="mt-5 text-base sm:text-lg leading-relaxed text-foreground/90">“{t.quote}”</p>
             </div>
           ))}
         </div>
@@ -288,7 +365,7 @@ function Contact() {
             <Linkedin size={16} /> LinkedIn
           </a>
           <a href={MAILTO} className="inline-flex items-center gap-2 border border-hairline px-6 py-3 rounded-full text-sm font-medium hover:bg-white/5 transition-colors">
-            <Calendar size={16} /> Book a Call
+            <Calendar size={16} /> Schedule a Call
           </a>
         </div>
       </div>
@@ -327,7 +404,7 @@ function Index() {
               logo={kkLogo}
               title="KK Create"
               subtitle="Instagram Lead & Content Strategist"
-              description="Led the page end-to-end: ideation, scripting, editor coordination, performance tracking. Scaled from 350K to 1.6M followers and built the YouTube channel to 750K subscribers."
+              description="Wrote 200+ scripts and led the page end-to-end: ideation, scripting, editor coordination, and performance tracking. Scaled from 350K to 1.6M followers and built the YouTube channel to 750K subscribers."
               categories={kkCategories}
               instagram={kkInstagram}
               youtube={kkYoutube}
@@ -339,8 +416,8 @@ function Index() {
             <WorkSection
               logo={wapLogo}
               title="What A Playerr"
-              subtitle="Sports Page Lead — Built from Zero"
-              description="Built a sports content page from scratch — strategy, scripting, and on-ground direction across Instagram and YouTube."
+              subtitle="Sports Page Lead: Built from Zero"
+              description="Built KK Create's sports content page from scratch, including strategy, scripting, and on-ground direction across Instagram and YouTube."
               categories={wapCategories}
               instagram={wapInstagram}
               youtube={wapYoutube}
