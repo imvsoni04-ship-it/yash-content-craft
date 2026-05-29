@@ -97,7 +97,6 @@ function Header() {
 }
 
 function FloatingComposition() {
-function FloatingComposition() {
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
   useEffect(() => {
