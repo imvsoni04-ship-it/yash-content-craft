@@ -226,14 +226,16 @@ export const testimonials = [
   {
     name: "Kavya Karnatc",
     initials: "KK",
+    image: "/src/assets/kavya.png",
     quote:
       "I hired Yash based on his: 🗣️ Honesty: He was upfront about how many hours he can commit in a day. 🤹‍♂️ Hustle: He was willing to work two part-time jobs while also attending college. ✍️ Homework: He had studied my work extensively and knew exactly what I wanted. 🙇‍♂️ Humility: He was willing to work for free, for the sheer joy of learning.",
     linkedin:
       "https://www.linkedin.com/feed/update/urn:li:activity:7265726565571846145/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEIgPccBMnCZd4P4ZjRZPThBnfDC2hdvGR4",
   },
   {
-    name: "Shusovita",
+    name: "Sushovita Das",
     initials: "S",
+    image: "/src/assets/sushovita.png",
     quote:
       "Yash showed me how to write scripts which hit millions of views. No question was too silly for him—he had my back!",
     linkedin:
