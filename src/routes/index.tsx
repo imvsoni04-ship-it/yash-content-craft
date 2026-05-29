@@ -320,26 +320,35 @@ function Testimonials() {
         <h2 className="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight">What People Say</h2>
         <div className="mt-12 grid md:grid-cols-2 gap-6">
           {testimonials.map((t, i) => (
-            <div key={i} className="rounded-2xl border border-hairline p-6 sm:p-8 bg-white/[0.02] flex flex-col">
+            <a
+              key={i}
+              href={t.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`${t.name} on LinkedIn`}
+              className="group relative rounded-2xl border border-hairline p-6 sm:p-8 bg-white/[0.02] flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/40 hover:border-white/20"
+            >
               <div className="flex items-center gap-4">
-                <div className="h-12 w-12 rounded-full bg-gradient-to-br from-accent-blue to-accent-blue/40 flex items-center justify-center text-sm font-semibold text-white">
-                  {t.initials}
-                </div>
+                {t.image ? (
+                  <img
+                    src={t.image}
+                    alt={t.name}
+                    className="h-12 w-12 sm:h-[60px] sm:w-[60px] rounded-full object-cover ring-1 ring-white/10"
+                  />
+                ) : (
+                  <div className="h-12 w-12 sm:h-[60px] sm:w-[60px] rounded-full bg-gradient-to-br from-accent-blue to-accent-blue/40 flex items-center justify-center text-sm font-semibold text-white">
+                    {t.initials}
+                  </div>
+                )}
                 <div className="flex-1">
                   <div className="text-sm font-medium">{t.name}</div>
                 </div>
-                <a
-                  href={t.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`${t.name} on LinkedIn`}
-                  className="p-2 rounded-full text-muted-foreground hover:text-accent-blue hover:bg-white/5 transition-colors"
-                >
-                  <Linkedin size={18} />
-                </a>
               </div>
               <p className="mt-5 text-base sm:text-lg leading-relaxed text-foreground/90">“{t.quote}”</p>
-            </div>
+              <span className="absolute bottom-4 right-4 text-muted-foreground group-hover:text-accent-blue transition-colors">
+                <Linkedin size={18} />
+              </span>
+            </a>
           ))}
         </div>
       </div>
