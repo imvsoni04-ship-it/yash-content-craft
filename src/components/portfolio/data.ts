@@ -223,9 +223,22 @@ export const skills = {
 };
 
 export const testimonials = [
-  { quote: "Yash brought structure and speed to our content engine. He turns complex ideas into reels that actually move the needle.", name: "Placeholder Name", role: "Founder, KK Create" },
-  { quote: "One of the sharpest content minds I've worked with. End-to-end ownership and a real instinct for what trends next.", name: "Placeholder Name", role: "Head of Content" },
-  { quote: "From scripting to performance tracking, Yash runs the page like a product. The growth speaks for itself.", name: "Placeholder Name", role: "Creative Director" },
+  {
+    name: "Kavya Karnatc",
+    initials: "KK",
+    quote:
+      "I hired Yash based on his: 🗣️ Honesty: He was upfront about how many hours he can commit in a day. 🤹‍♂️ Hustle: He was willing to work two part-time jobs while also attending college. ✍️ Homework: He had studied my work extensively and knew exactly what I wanted. 🙇‍♂️ Humility: He was willing to work for free, for the sheer joy of learning.",
+    linkedin:
+      "https://www.linkedin.com/feed/update/urn:li:activity:7265726565571846145/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEIgPccBMnCZd4P4ZjRZPThBnfDC2hdvGR4",
+  },
+  {
+    name: "Shusovita",
+    initials: "S",
+    quote:
+      "Yash showed me how to write scripts which hit millions of views. No question was too silly for him—he had my back!",
+    linkedin:
+      "https://www.linkedin.com/feed/update/urn:li:activity:7259226872448786434/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEIgPccBMnCZd4P4ZjRZPThBnfDC2hdvGR4",
+  },
 ];
 
 export const milestones = [
