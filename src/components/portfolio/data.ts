@@ -7,6 +7,9 @@ export type Embed = {
   featured?: boolean;
 };
 
+import kavyaImg from "@/assets/kavya.png";
+import sushovitaImg from "@/assets/sushovita.png";
+
 // Reels from KK Create — sourced from Yash's content sheet.
 // `featured: true` marks the curated picks that show in the "All" tab.
 const featuredUrls = new Set([
