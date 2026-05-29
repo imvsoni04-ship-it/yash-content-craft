@@ -176,4 +176,17 @@
     opacity: 1;
     transform: translateY(0);
   }
+  @keyframes float-y {
+    0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); }
+    50% { transform: translateY(-10px) rotate(var(--tilt, 0deg)); }
+  }
+  .float-tile {
+    animation: float-y 6s ease-in-out infinite;
+    transition: transform 300ms ease;
+    will-change: transform;
+  }
+  .float-tile:hover {
+    transform: translateY(-6px) rotate(var(--tilt, 0deg)) scale(1.08);
+    box-shadow: 0 20px 60px -10px color-mix(in oklab, var(--accent-blue) 40%, transparent);
+  }
 }
